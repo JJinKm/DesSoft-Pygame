@@ -15,9 +15,8 @@ meteor_img = pygame.image.load('assets/img/meteorBrown_med1.png').convert_alpha(
 meteor_img = pygame.transform.scale(meteor_img, (METEOR_WIDTH, METEOR_HEIGHT))
 ship_img = pygame.image.load('assets/img/playerShip1_orange.png').convert_alpha()
 ship_img = pygame.transform.scale(ship_img, (SHIP_WIDTH, SHIP_HEIGHT))
-x_lista = [0,WIDTH-METEOR_WIDTH]
-speed_list = [-8,0,8]
-speed_list2 = [-8,8]
+x_lista = [0,WIDTH]
+speed_list = [0,8]
 
 class character(pygame.sprite.Sprite):
     def __init__(self, img):
@@ -50,17 +49,27 @@ class arrow(pygame.sprite.Sprite):
         self.rect.y = random.randint(-METEOR_HEIGHT, HEIGHT)
         self.speedx = random.choice(speed_list)
         self.speedy = random.choice(speed_list)
+        self.initposx = self.rect.x
+        self.initposy = self.rect.y
     def update(self):
-        self.rect.x += self.speedx
-        self.rect.y += self.speedy
+        if self.initposx == 0:
+            self.rect.x += self.speedx
+        elif self.initposx == WIDTH:
+            self.rect.x -= self.speedx
+        if self.initposy >= HEIGHT/2:
+            self.rect.y -= self.speedy
+        elif self.initposy < HEIGHT/2:
+            self.rect.y += self.speedy
+        if self.speedx == 0 and self.speedy == 0:
+            self.speedx = 8
+            self.speedy = 0
+
 
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             self.rect.x = random.choice(x_lista)
             self.rect.y = random.randint(0, HEIGHT)
-            if self.speedy == 0:
-                self.speedx = random.choice(speed_list2)
-            elif self.speedx == 0:
-                self.speedy = random.choice(speed_list2)
+            self.speedx = random.choice(speed_list)
+            self.speedy = random.choice(speed_list)
 
 clock = pygame.time.Clock()
 FPS = 30
