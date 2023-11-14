@@ -68,7 +68,7 @@ class arrow(pygame.sprite.Sprite):
                 self.rect.x -= self.speedx
 
 
-        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH + METEOR_WIDTH:
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH + ARROW_WIDTH:
             self.rect.x = random.choice(x_lista)
             self.rect.y = random.randint(0, HEIGHT)
             self.speedx = random.randint(9,16)
