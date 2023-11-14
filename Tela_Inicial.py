@@ -7,15 +7,15 @@ HEIGHT = 600
 window = pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption('Nome')
 
-METEOR_WIDTH = 48
-METEOR_HEIGHT = 7
-SHIP_WIDTH = 25
-SHIP_HEIGHT = 25
+ARROW_WIDTH = 38
+ARROW_HEIGHT = 7
+CHARACTER_WIDTH = 25
+CHARACTER_HEIGHT = 25
 meteor_img = pygame.image.load('assets/img/meteorBrown_med1.png').convert_alpha()
-meteor_img = pygame.transform.scale(meteor_img, (METEOR_WIDTH, METEOR_HEIGHT))
+meteor_img = pygame.transform.scale(meteor_img, (ARROW_WIDTH, ARROW_HEIGHT))
 ship_img = pygame.image.load('assets/img/playerShip1_orange.png').convert_alpha()
-ship_img = pygame.transform.scale(ship_img, (SHIP_WIDTH, SHIP_HEIGHT))
-x_lista = [-METEOR_WIDTH, WIDTH + METEOR_WIDTH]
+ship_img = pygame.transform.scale(ship_img, (CHARACTER_WIDTH, CHARACTER_HEIGHT))
+x_lista = [-ARROW_WIDTH, WIDTH + ARROW_WIDTH]
 speed_list = [0,8]
 
 class character(pygame.sprite.Sprite):
@@ -52,14 +52,14 @@ class arrow(pygame.sprite.Sprite):
         self.initposx = self.rect.x
         self.initposy = self.rect.y
     def update(self):
-        if self.initposx == -METEOR_WIDTH:
+        if self.initposx == -ARROW_WIDTH:
             if self.initposy <= HEIGHT/2:
                 self.rect.y += self.speedy
                 self.rect.x += self.speedx
             elif self.initposy > HEIGHT/2:
                 self.rect.y -= self.speedy
                 self.rect.x += self.speedx
-        if self.initposx == WIDTH + METEOR_WIDTH:
+        if self.initposx == WIDTH + ARROW_WIDTH:
             if self.initposy <= HEIGHT/2:
                 self.rect.y += self.speedy
                 self.rect.x -= self.speedx
@@ -79,13 +79,13 @@ FPS = 30
 
 game = True
 all_sprites = pygame.sprite.Group()
-all_meteors = pygame.sprite.Group()
+all_arrow = pygame.sprite.Group()
 player = character(ship_img)
 all_sprites.add(player)
 for i in range(8):
-    meteor = arrow(meteor_img)
-    all_sprites.add(meteor)
-    all_meteors.add(meteor)
+    Arrow = arrow(meteor_img)
+    all_sprites.add(Arrow)
+    all_arrow.add(Arrow)
 while game:
     clock.tick(FPS)
     for event in pygame.event.get():
