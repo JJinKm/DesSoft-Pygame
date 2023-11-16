@@ -109,6 +109,12 @@ while game:
                 player.speedy += 8
             if event.key == pygame.K_DOWN:
                 player.speedy -= 8
+
+    collisions = pygame.sprite.spritecollide(player, all_arrow, True)  # Verifica colisão e remove os meteoros
+
+    if collisions:  # Se houve colisão
+        game = False  # Define a variável game como False para encerrar o jogo
+
     all_sprites.update()
     window.fill((255,255,255))
     all_sprites.draw(window)
