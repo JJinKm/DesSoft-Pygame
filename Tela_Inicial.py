@@ -18,6 +18,10 @@ ship_img = pygame.transform.scale(ship_img, (CHARACTER_WIDTH, CHARACTER_HEIGHT))
 x_lista = [-ARROW_WIDTH, WIDTH + ARROW_WIDTH]
 speed_list = [0,8]
 
+player_lives = 3
+heart_img = pygame.image.load('caminho/para/o/icone_do_coracao.png').convert_alpha()
+heart_img = pygame.transform.scale(heart_img, (30, 30))
+
 class character(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
@@ -86,6 +90,7 @@ for i in range(8):
     Arrow = arrow(meteor_img)
     all_sprites.add(Arrow)
     all_arrow.add(Arrow)
+    
 while game:
     clock.tick(FPS)
     for event in pygame.event.get():
@@ -113,7 +118,13 @@ while game:
     collisions = pygame.sprite.spritecollide(player, all_arrow, True)  # Verifica colisão e remove os meteoros
 
     if collisions:  # Se houve colisão
-        game = False  # Define a variável game como False para encerrar o jogo
+        player_lives -= 1  # Reduz uma vida do jogador
+        
+        if player_lives == 0:  # Se as vidas acabaram
+            game = False  # Encerra o jogo
+
+    for i in range(player_lives):
+            window.blit(heart_img, (10 + i * 40, 10))  # Posiciona os corações na tela
 
     all_sprites.update()
     window.fill((255,255,255))
