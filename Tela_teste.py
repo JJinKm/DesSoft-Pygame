@@ -24,14 +24,16 @@ heart_img = pygame.image.load('assets/img/health.png').convert_alpha()
 heart_img = pygame.transform.scale(heart_img, (30, 30))
 
 class character(pygame.sprite.Sprite):
-    def __init__(self, img):
+    def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
-        self.image = img
+        self.image = assets[CHARACTER_IMG]
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT /2
         self.speedx = 0
         self.speedy = 0
+        self.assets = assets
     def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
@@ -47,8 +49,9 @@ class character(pygame.sprite.Sprite):
 
 class arrow(pygame.sprite.Sprite):
     def __init__(self, img):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = img
+        pygame.sprite.Sprite.__init__(self, assets)
+        self.image = assets[ARROW_IMG]
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = random.choice(x_lista)
         self.rect.y = random.randint(-ARROW_HEIGHT, HEIGHT+ARROW_HEIGHT)
@@ -80,7 +83,7 @@ class arrow(pygame.sprite.Sprite):
             self.speedy = random.choice(speed_list)
 
 clock = pygame.time.Clock()
-FPS = 30
+FPS = 60
 
 game = True
 all_sprites = pygame.sprite.Group()
