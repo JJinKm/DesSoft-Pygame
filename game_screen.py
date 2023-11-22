@@ -1,8 +1,9 @@
 import pygame
 import random
-from config import FPS, WIDTH, HEIGHT, HORIZONTAL, VERTICAL
+from config import FPS, WIDTH, HEIGHT, HORIZONTAL, VERTICAL, LEADERBOARD
 from assets import load_assets, TIMER_FONT
 from sprites import Character, Arrow
+from leaderboard import leaderboard
 
 def game_screen(window):
     clock = pygame.time.Clock()
@@ -29,9 +30,8 @@ def game_screen(window):
     state = PLAYING
 
     keys_down = {}
-    lives = 1
 
-    t = pygame.time.get_ticks()
+    t_init = pygame.time.get_ticks()
 
     while state != DONE:
         clock.tick(FPS)
@@ -63,13 +63,10 @@ def game_screen(window):
         collisions = pygame.sprite.spritecollide(player, all_arrow, True, pygame.sprite.collide_mask)  # Verifica colisão e remove os meteoros
 
         if len(collisions) > 0:  # Se houve colisão
-            lives -= 1  # Reduz uma vida do jogador
-
-            if lives == 0:  # Se as vidas acabaram
-                state = DONE  # Encerra o jogo
-
+            time_finished = time_playing
+            state = leaderboard(window, LEADERBOARD, time_finished)[0]  # Encerra o jogo
         t = pygame.time.get_ticks()
-        time_playing = t/1000
+        time_playing = (t - t_init)/1000
         timer = assets[TIMER_FONT].render('{0:.2f}'.format(time_playing), True, (0,0,255)) # A função "get_ticks" dá o valor em milissegundos, divide por 1000 para ter em segundos.
 
         all_sprites.update()
