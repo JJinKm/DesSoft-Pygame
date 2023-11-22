@@ -31,6 +31,8 @@ def game_screen(window):
     keys_down = {}
     lives = 1
 
+    t = pygame.time.get_ticks()
+
     while state != DONE:
         clock.tick(FPS)
 
@@ -46,6 +48,8 @@ def game_screen(window):
                     player.speedy -= 6
                 if event.key == pygame.K_DOWN:
                     player.speedy += 6
+                if event.key == pygame.K_ESCAPE:
+                    state = DONE
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
                     player.speedx += 6
@@ -63,8 +67,6 @@ def game_screen(window):
 
             if lives == 0:  # Se as vidas acabaram
                 state = DONE  # Encerra o jogo
-
-
 
         t = pygame.time.get_ticks()
         time_playing = t/1000
