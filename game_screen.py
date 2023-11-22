@@ -56,9 +56,9 @@ def game_screen(window):
                 if event.key == pygame.K_DOWN:
                     player.speedy -= 6
 
-        collisions = pygame.sprite.spritecollide(player, all_arrow, True)  # Verifica colisão e remove os meteoros
+        collisions = pygame.sprite.spritecollide(player, all_arrow, True, pygame.sprite.collide_mask)  # Verifica colisão e remove os meteoros
 
-        if collisions:  # Se houve colisão
+        if len(collisions) > 0:  # Se houve colisão
             lives -= 1  # Reduz uma vida do jogador
 
             if lives == 0:  # Se as vidas acabaram
