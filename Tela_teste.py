@@ -17,6 +17,7 @@ ship_img = pygame.image.load('assets/img/playerShip1_orange.png').convert_alpha(
 ship_img = pygame.transform.scale(ship_img, (CHARACTER_WIDTH, CHARACTER_HEIGHT))
 x_lista = [-ARROW_WIDTH, WIDTH + ARROW_WIDTH]
 speed_list = [0,8]
+font = pygame.font.SysFont(None, 48)
 
 
 player_lives = 3 # vidas
@@ -24,14 +25,16 @@ heart_img = pygame.image.load('Assets\img\health.png').convert_alpha()
 heart_img = pygame.transform.scale(heart_img, (30, 30))
 
 class character(pygame.sprite.Sprite):
-    def __init__(self, img):
+    def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
-        self.image = img
+        self.image = assets[CHARACTER_IMG]
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT /2
         self.speedx = 0
         self.speedy = 0
+        self.assets = assets
     def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
@@ -47,11 +50,12 @@ class character(pygame.sprite.Sprite):
 
 class arrow(pygame.sprite.Sprite):
     def __init__(self, img):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = img
+        pygame.sprite.Sprite.__init__(self, assets)
+        self.image = assets[ARROW_IMG]
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = random.choice(x_lista)
-        self.rect.y = random.randint(0, HEIGHT)
+        self.rect.y = random.randint(-ARROW_HEIGHT, HEIGHT+ARROW_HEIGHT)
         self.speedx = random.randint(9,16)
         self.speedy = random.choice(speed_list)
         self.initposx = self.rect.x
@@ -73,14 +77,14 @@ class arrow(pygame.sprite.Sprite):
                 self.rect.x -= self.speedx
 
 
-        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH + ARROW_WIDTH:
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH + ARROW_WIDTH or self.rect.bottom < 0:
             self.rect.x = random.choice(x_lista)
             self.rect.y = random.randint(0, HEIGHT)
             self.speedx = random.randint(9,16)
             self.speedy = random.choice(speed_list)
 
 clock = pygame.time.Clock()
-FPS = 30
+FPS = 60
 
 game = True
 all_sprites = pygame.sprite.Group()
@@ -124,11 +128,16 @@ while game:
         if player_lives == 0:  # Se as vidas acabaram
             game = False  # Encerra o jogo
 
-    for i in range(player_lives):
-            window.blit(heart_img, (10 + i * 40, 10))  # Posiciona os corações na tela
+    
+
+    t = pygame.time.get_ticks()
+    timer = font.render('{0:.2f}'.format(t/1000), True, (0,0,255)) # A função "get_ticks" dá o valor em milissegundos, divide por 1000 para ter em segundos.
 
     all_sprites.update()
     window.fill((255,255,255))
+    window.blit(timer, (10,10))
+    for i in range(player_lives):
+            window.blit(heart_img, (10 + i * 40, 550)) # As vidas não tava aparecendo na tela, porque tava antes do Window.fill
     all_sprites.draw(window)
     pygame.display.update()
     
