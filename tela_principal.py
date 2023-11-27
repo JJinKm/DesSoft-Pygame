@@ -35,14 +35,17 @@ while running:
             survived_time = end_time - start_time if start_time is not None else 0
 
             font = pygame.font.Font(None, 36)
-            text = font.render(f'Game Over - Você Sobreviveu por {survived_time:.2f} segundos', True, (255, 255, 255))
+            text = font.render(f'Game Over', True, (255, 255, 255))
+            text2 = font.render(f'Você Sobreviveu por {survived_time:.2f} segundos', True, (255,255,255))
             text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+            text2_rect = text2.get_rect(center=(WIDTH //2, HEIGHT // 2 + 56))
 
             window.fill((0, 0, 0))
             window.blit(text, text_rect)
+            window.blit(text2, text2_rect)
             pygame.display.flip()
             pygame.time.wait(5000)  
-            running = False
+            state = INIT
 
             start_time = None  
 
