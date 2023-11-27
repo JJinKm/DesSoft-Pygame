@@ -1,9 +1,9 @@
 import pygame
 import random
-from config import FPS, WIDTH, HEIGHT, HORIZONTAL, VERTICAL, LEADERBOARD
+from config import FPS, WIDTH, HEIGHT, HORIZONTAL, VERTICAL
 from assets import load_assets, TIMER_FONT
 from sprites import Character, Arrow
-from leaderboard import leaderboard
+# from leaderboard import leaderboard
 
 def game_screen(window):
     clock = pygame.time.Clock()
@@ -18,9 +18,12 @@ def game_screen(window):
 
     player = Character(groups, assets)
     all_sprites.add(player)
-    for i in range(8):
+    DIFF = 2
+    N_ARROW = 5
+    AUG = 0
+    for i in range(N_ARROW):
         posicao = random.choice([HORIZONTAL, VERTICAL])
-        arrow = Arrow(assets, posicao)
+        arrow = Arrow(assets, posicao, AUG)
         all_sprites.add(arrow)
         all_arrow.add(arrow)
     
@@ -32,6 +35,10 @@ def game_screen(window):
     keys_down = {}
 
     t_init = pygame.time.get_ticks()
+    
+    current = N_ARROW
+    current_aug = AUG
+    t_aug = 10
 
     while state != DONE:
         clock.tick(FPS)
@@ -63,10 +70,22 @@ def game_screen(window):
         collisions = pygame.sprite.spritecollide(player, all_arrow, True, pygame.sprite.collide_mask)  # Verifica colisão e remove os meteoros
 
         if len(collisions) > 0:  # Se houve colisão
-            time_finished = time_playing
-            state = leaderboard(window, LEADERBOARD, time_finished)[0]  # Encerra o jogo
+            state = DONE  # Encerra o jogo
         t = pygame.time.get_ticks()
         time_playing = (t - t_init)/1000
+
+        bool_diff = False
+        if time_playing >= t_aug:
+            bool_diff = True
+        if bool_diff:
+            current += DIFF
+            current_aug += DIFF
+            t_aug += 10
+            for i in range(current):
+                posicao = random.choice([HORIZONTAL, VERTICAL])
+                arrow = Arrow(assets, posicao, current_aug)
+                all_sprites.add(arrow)
+                all_arrow.add(arrow)
         timer = assets[TIMER_FONT].render('{0:.2f}'.format(time_playing), True, (0,0,255)) # A função "get_ticks" dá o valor em milissegundos, divide por 1000 para ter em segundos.
 
         all_sprites.update()

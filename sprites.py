@@ -29,17 +29,18 @@ class Character(pygame.sprite.Sprite):
             self.rect.bottom = HEIGHT
 
 class Arrow(pygame.sprite.Sprite):
-    def __init__(self, assets, posicao):
+    def __init__(self, assets, posicao, DIFF):
         pygame.sprite.Sprite.__init__(self)
         self.position = posicao
         self.assets = assets
+        self.diff = DIFF
         if self.position == HORIZONTAL:
             self.image = assets[ARROW_IMG_X]
             self.mask = pygame.mask.from_surface(self.image)
             self.rect = self.image.get_rect()
             self.rect.x = random.choice(x_lista)
             self.rect.y = random.randint(-ARROW_HEIGHT_X, HEIGHT+ARROW_HEIGHT_X)
-            self.speedx = random.randint(6,9)
+            self.speedx = random.randint(5+DIFF,7+DIFF)
             self.speedy = random.choice(speed_list)
             self.initposx = self.rect.x
             self.initposy = self.rect.y
@@ -50,7 +51,7 @@ class Arrow(pygame.sprite.Sprite):
             self.rect.x = random.randint(-ARROW_WIDTH_Y, WIDTH+ARROW_WIDTH_Y)
             self.rect.y = random.choice(y_lista)
             self.speedx = random.choice(speed_list)
-            self.speedy = random.randint(6,9)
+            self.speedy = random.randint(5+DIFF,7+DIFF)
             self.initposx = self.rect.x
             self.initposy = self.rect.y
     def update(self):
@@ -94,7 +95,7 @@ class Arrow(pygame.sprite.Sprite):
                 self.rect = self.image.get_rect()
                 self.rect.x = random.choice(x_lista)
                 self.rect.y = random.randint(-ARROW_HEIGHT_X, HEIGHT+ARROW_HEIGHT_X)
-                self.speedx = random.randint(6,9)
+                self.speedx = random.randint(5+self.diff,7+self.diff)
                 self.speedy = random.choice(speed_list)
                 self.initposx = self.rect.x
                 self.initposy = self.rect.y
@@ -105,6 +106,6 @@ class Arrow(pygame.sprite.Sprite):
                 self.rect.x = random.randint(-ARROW_WIDTH_Y, WIDTH+ARROW_WIDTH_Y)
                 self.rect.y = random.choice(y_lista)
                 self.speedx = random.choice(speed_list)
-                self.speedy = random.randint(6,9)
+                self.speedy = random.randint(5+self.diff,7+self.diff)
                 self.initposx = self.rect.x
                 self.initposy = self.rect.y
