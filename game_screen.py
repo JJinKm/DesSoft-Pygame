@@ -1,6 +1,6 @@
 import pygame
 import random
-from config import FPS, WIDTH, HEIGHT, HORIZONTAL, VERTICAL, LEADERBOARD
+from config import FPS, WIDTH, HEIGHT, HORIZONTAL, VERTICAL
 from assets import load_assets, TIMER_FONT
 from sprites import Character, Arrow
 from leaderboard import leaderboard
@@ -64,7 +64,7 @@ def game_screen(window):
 
         if len(collisions) > 0:  # Se houve colisão
             time_finished = time_playing
-            state = leaderboard(window, LEADERBOARD, time_finished)[0]  # Encerra o jogo
+            state = DONE  # Encerra o jogo
         t = pygame.time.get_ticks()
         time_playing = (t - t_init)/1000
         timer = assets[TIMER_FONT].render('{0:.2f}'.format(time_playing), True, (0,0,255)) # A função "get_ticks" dá o valor em milissegundos, divide por 1000 para ter em segundos.
@@ -74,3 +74,4 @@ def game_screen(window):
         window.blit(timer, (10,10))
         all_sprites.draw(window)
         pygame.display.update()
+    return state
