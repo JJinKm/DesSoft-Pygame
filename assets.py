@@ -19,6 +19,6 @@ def load_assets():
     assets[ARROW_IMG_Y] = pygame.transform.scale(assets['arrow_img_y'], (ARROW_WIDTH_Y, ARROW_HEIGHT_Y))
     assets[CHARACTER_IMG] = pygame.image.load(os.path.join(IMG_DIR, 'playerShip1_orange.png')).convert_alpha()
     assets[CHARACTER_IMG] = pygame.transform.scale(assets['character_img'], (CHARACTER_WIDTH, CHARACTER_HEIGHT))
-    assets[TIMER_FONT] = pygame.font.Font(os.path.join(FNT_DIR, 'PressStart2P.ttf'), 28)
+    assets[TIMER_FONT] = pygame.font.Font(os.path.join(FNT_DIR, 'PressStart2P.ttf'), 22)
     assets[CURSOR_IMG] = pygame.image.load(os.path.join(IMG_DIR, 'Cursor.png')).convert()
     return assets

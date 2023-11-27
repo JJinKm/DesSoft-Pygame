@@ -1,5 +1,4 @@
 from os import path
-from game_screen import game_screen
 
 IMG_DIR = path.join(path.dirname(__file__), 'assets', 'img')
 SND_DIR = path.join(path.dirname(__file__), 'assets', 'snd')

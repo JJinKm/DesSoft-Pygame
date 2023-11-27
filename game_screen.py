@@ -109,7 +109,7 @@ def game_screen(window, best_score):
         all_sprites.update()
         window.fill((255,255,255))
         window.blit(timer, (10,10))
-        window.blit(best_text, (10,30))
+        window.blit(best_text, (10,40))
         all_sprites.draw(window)
         pygame.display.update()
     return [state,best_score]
