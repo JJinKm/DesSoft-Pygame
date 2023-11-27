@@ -1,11 +1,11 @@
 import pygame
 import random
-from config import FPS, WIDTH, HEIGHT, HORIZONTAL, VERTICAL
+from config import FPS, WIDTH, HEIGHT, HORIZONTAL, VERTICAL, best_score
 from assets import load_assets, TIMER_FONT
 from sprites import Character, Arrow
 # from leaderboard import leaderboard
 
-def game_screen(window):
+def game_screen(window, best_score):
     clock = pygame.time.Clock()
 
     assets = load_assets()
@@ -18,9 +18,9 @@ def game_screen(window):
 
     player = Character(groups, assets)
     all_sprites.add(player)
-    DIFF = 2
+    DIFF = 1
     N_ARROW = 5
-    AUG = 0
+    AUG = 1
     for i in range(N_ARROW):
         posicao = random.choice([HORIZONTAL, VERTICAL])
         arrow = Arrow(assets, posicao, AUG)
@@ -38,7 +38,9 @@ def game_screen(window):
     
     current = N_ARROW
     current_aug = AUG
-    t_aug = 10
+    t_aug = 5
+
+    best_text = assets[TIMER_FONT].render('{0:.2f}'.format(best_score), True, (0, 0, 255))
 
     while state != DONE:
         clock.tick(FPS)
@@ -47,6 +49,18 @@ def game_screen(window):
             if event.type == pygame.QUIT:
                 state = DONE
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT and event.key == pygame.K_UP:
+                    player.speedx -= 3
+                    player.speedy += 3
+                if event.key == pygame.K_RIGHT and event.key == pygame.K_UP:
+                    player.speedx += 3
+                    player.speedy += 3
+                if event.key == pygame.K_LEFT and event.key == pygame.K_DOWN:
+                    player.speedx -= 3
+                    player.speedy += 3
+                if event.key == pygame.K_RIGHT and event.key == pygame.K_DOWN:
+                    player.speedx += 3
+                    player.speedy += 3
                 if event.key == pygame.K_LEFT:
                     player.speedx -= 6
                 if event.key == pygame.K_RIGHT:
@@ -71,6 +85,8 @@ def game_screen(window):
 
         if len(collisions) > 0:  # Se houve colisão
             time_finished = time_playing
+            if time_finished > best_score:
+                best_score = time_finished
             state = DONE
         t = pygame.time.get_ticks()
         time_playing = (t - t_init)/1000
@@ -82,6 +98,7 @@ def game_screen(window):
             current += DIFF
             current_aug += DIFF
             t_aug += 10
+            bool_diff = False
             for i in range(current):
                 posicao = random.choice([HORIZONTAL, VERTICAL])
                 arrow = Arrow(assets, posicao, current_aug)
@@ -92,6 +109,7 @@ def game_screen(window):
         all_sprites.update()
         window.fill((255,255,255))
         window.blit(timer, (10,10))
+        window.blit(best_text, (10,30))
         all_sprites.draw(window)
         pygame.display.update()
-    return state
+    return [state,best_score]

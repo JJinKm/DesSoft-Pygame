@@ -1,7 +1,7 @@
 import pygame
 import random
 import time
-from config import WIDTH, HEIGHT, INIT, GAME, QUIT, CREDIT
+from config import WIDTH, HEIGHT, INIT, GAME, QUIT, CREDIT, best_score
 from game_screen import game_screen
 from init_screen import init_screen
 from credit_screen import credit_screen
@@ -27,7 +27,9 @@ while running:
         state = init_screen(window)
         start_time = time.time()  
     elif state == GAME:
-        state = game_screen(window)
+        screen_game = game_screen(window,best_score)
+        state = screen_game[0]
+        best_score = screen_game[1] + 0.03
 
         
         if state == 0:
@@ -56,5 +58,3 @@ while running:
     clock.tick(60)
 
 pygame.quit()
-
-

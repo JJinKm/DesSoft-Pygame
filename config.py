@@ -1,4 +1,5 @@
 from os import path
+from game_screen import game_screen
 
 IMG_DIR = path.join(path.dirname(__file__), 'assets', 'img')
 SND_DIR = path.join(path.dirname(__file__), 'assets', 'snd')
@@ -34,21 +35,4 @@ GAME = 1
 QUIT = 2
 CREDIT = 3
 
-def LEADERBOARD(leaderboard,s,time):
-    saida = {}
-    lista_usuar = []
-    lista_tempo = []
-    for usuar, tempo in leaderboard.items():
-        lista_usuar.append(usuar)
-        lista_tempo.append(tempo)
-    i = 0
-    lista_saida_t = [0]*len(lista_usuar)
-    lista_saida_usuar = [0]*len(lista_usuar)
-    while i < len(lista_tempo):
-        j = 0
-        while j < len(lista_tempo):
-            if lista_tempo[i] < lista_tempo[j] or j == len(lista_tempo) - 1:
-                lista_saida_t[j] = lista_tempo[i]
-                lista_saida_usuar[j] = lista_usuar[i]
-            j += 1
-        i += 1
+best_score = 0
