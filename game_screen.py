@@ -70,7 +70,8 @@ def game_screen(window):
         collisions = pygame.sprite.spritecollide(player, all_arrow, True, pygame.sprite.collide_mask)  # Verifica colisão e remove os meteoros
 
         if len(collisions) > 0:  # Se houve colisão
-            state = DONE  # Encerra o jogo
+            time_finished = time_playing
+            state = DONE
         t = pygame.time.get_ticks()
         time_playing = (t - t_init)/1000
 
@@ -93,3 +94,4 @@ def game_screen(window):
         window.blit(timer, (10,10))
         all_sprites.draw(window)
         pygame.display.update()
+    return state

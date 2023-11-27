@@ -19,8 +19,9 @@ x_lista = [-ARROW_WIDTH, WIDTH + ARROW_WIDTH]
 speed_list = [0,8]
 font = pygame.font.SysFont(None, 48)
 
+
 player_lives = 3 # vidas
-heart_img = pygame.image.load('assets/img/health.png').convert_alpha()
+heart_img = pygame.image.load('Assets\img\health.png').convert_alpha()
 heart_img = pygame.transform.scale(heart_img, (30, 30))
 
 class character(pygame.sprite.Sprite):
