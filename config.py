@@ -1,4 +1,5 @@
 from os import path
+import pygame
 
 IMG_DIR = path.join(path.dirname(__file__), 'assets', 'img')
 SND_DIR = path.join(path.dirname(__file__), 'assets', 'snd')
@@ -16,7 +17,7 @@ ARROW_HEIGHT_X = 7
 ARROW_HEIGHT_Y = 35
 ARROW_WIDTH_Y = 7
 CHARACTER_WIDTH = 25
-CHARACTER_HEIGHT = 25
+CHARACTER_HEIGHT = 30
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)

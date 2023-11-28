@@ -1,8 +1,8 @@
 import pygame
 import random
 from os import path
-from assets import load_assets, TIMER_FONT, CURSOR_IMG
-from config import FPS, GAME, QUIT, IMG_DIR, CREDIT, BLACK, BLUE, WIDTH, HEIGHT, WHITE
+from assets import load_assets, TIMER_FONT, CURSOR_IMG, MAIN_MENU_MSC
+from config import FPS, GAME, QUIT, IMG_DIR, CREDIT, BLACK, BLUE, WIDTH, HEIGHT, WHITE, SND_DIR
 
 def init_screen(screen):
     clock = pygame.time.Clock()
@@ -12,24 +12,32 @@ def init_screen(screen):
     img_cursor_rect_jogar = img_cursor.get_rect(center=(115, HEIGHT/2-10))
     img_cursor_rect_credit = img_cursor.get_rect(center=(115, HEIGHT/2+70))
 
-    T_NOME = assets[TIMER_FONT].render('Nome do Jogo', True, WHITE)
+    T_NOME = assets[TIMER_FONT].render("Cat's Survival", True, WHITE)
     T_NOME_RECT = T_NOME.get_rect(center=(WIDTH/2,20))
     T_JOGAR = assets[TIMER_FONT].render('Jogar',True, WHITE)
     T_JOGAR_RECT = T_JOGAR.get_rect(center=(WIDTH/2,HEIGHT/2-10))
     T_CREDIT = assets[TIMER_FONT].render('Creditos', True, WHITE)
     T_CREDIT_RECT = T_CREDIT.get_rect(center=(WIDTH/2,HEIGHT/2 + 70))
 
-    jogar = 0
-    credito = 1
-    cursor = jogar
+
+    JOGAR = 0
+    CREDITO = 1
+    cursor = JOGAR
 
     running = True
+
+    if pygame.mixer.music.get_busy() == False:
+        pygame.mixer.music.load(path.join(SND_DIR, 'music_pygame.wav'))
+        pygame.mixer.music.set_volume(0.4)
+
+        pygame.mixer.music.play(loops=-1)
+
     while running:
         clock.tick(FPS)
 
         screen.fill(BLACK)
         for i in range(1,5):
-            background = pygame.image.load(path.join(IMG_DIR,'{0}.png'.format(i)))
+            background = pygame.image.load(path.join(IMG_DIR,'Inicio{0}.png'.format(i)))
             background = pygame.transform.scale(background,(WIDTH,HEIGHT))
             backgroud_rect = background.get_rect()
             screen.blit(background,backgroud_rect)
@@ -43,21 +51,22 @@ def init_screen(screen):
                 running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    if cursor == jogar:
+                    if cursor == JOGAR:
                         state = GAME
                         running = False
-                    if cursor == credito:
+                    if cursor == CREDITO:
                         state = CREDIT
+                        pygame.mixer.music.pause
                         running = False
                 if event.key == pygame.K_UP:
-                    if cursor == credito:
-                        cursor = jogar
+                    if cursor == CREDITO:
+                        cursor = JOGAR
                 if event.key == pygame.K_DOWN:
-                    if cursor == jogar:
-                        cursor = credito
-        if cursor == jogar:
+                    if cursor == JOGAR:
+                        cursor = CREDITO
+        if cursor == JOGAR:
             screen.blit(img_cursor, img_cursor_rect_jogar)
-        if cursor == credito:
+        if cursor == CREDITO:
                 screen.blit(img_cursor, img_cursor_rect_credit)
         pygame.display.update()
     return state

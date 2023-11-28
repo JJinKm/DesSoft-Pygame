@@ -1,9 +1,9 @@
 import pygame
 import random
-from config import FPS, WIDTH, HEIGHT, HORIZONTAL, VERTICAL, best_score
-from assets import load_assets, TIMER_FONT
+from os import path
+from config import FPS, WIDTH, HEIGHT, HORIZONTAL, VERTICAL, best_score, QUIT, SND_DIR, BLACK,BLUE
+from assets import load_assets, TIMER_FONT, BACKGROUND
 from sprites import Character, Arrow
-# from leaderboard import leaderboard
 
 def game_screen(window, best_score):
     clock = pygame.time.Clock()
@@ -32,69 +32,90 @@ def game_screen(window, best_score):
     OVER = 2
     state = PLAYING
 
-    keys_down = {}
+    bgd_random = random.randint(0,4)
 
     t_init = pygame.time.get_ticks()
     
     current = N_ARROW
     current_aug = AUG
-    t_aug = 5
+    t_aug = 10
 
     best_text = assets[TIMER_FONT].render('{0:.2f}'.format(best_score), True, (0, 0, 255))
 
+    music_random = random.randint(0,4)
+    pygame.mixer.music.load(path.join(SND_DIR, 'bgm{0}.wav'.format(music_random)))
+    pygame.mixer.music.set_volume(0.10)
+    pygame.mixer.music.play()
+
     while state != DONE:
         clock.tick(FPS)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                state = DONE
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT and event.key == pygame.K_UP:
-                    player.speedx -= 3
-                    player.speedy += 3
-                if event.key == pygame.K_RIGHT and event.key == pygame.K_UP:
-                    player.speedx += 3
-                    player.speedy += 3
-                if event.key == pygame.K_LEFT and event.key == pygame.K_DOWN:
-                    player.speedx -= 3
-                    player.speedy += 3
-                if event.key == pygame.K_RIGHT and event.key == pygame.K_DOWN:
-                    player.speedx += 3
-                    player.speedy += 3
-                if event.key == pygame.K_LEFT:
-                    player.speedx -= 6
-                if event.key == pygame.K_RIGHT:
-                    player.speedx += 6
-                if event.key == pygame.K_UP:
-                    player.speedy -= 6
-                if event.key == pygame.K_DOWN:
-                    player.speedy += 6
-                if event.key == pygame.K_ESCAPE:
+        t = pygame.time.get_ticks()
+        time_playing = (t - t_init)/1000
+        timer = assets[TIMER_FONT].render('{0:.2f}'.format(time_playing), True, BLUE) # A função "get_ticks" dá o valor em milissegundos, divide por 1000 para ter em segundos.
+        window.fill((255,255,255))
+        window.blit(assets[BACKGROUND][bgd_random], (0,0))
+        window.blit(timer, (10,10))
+        window.blit(best_text, (10,40))
+        if state == PLAYING:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
                     state = DONE
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    player.speedx += 6
-                if event.key == pygame.K_RIGHT:
-                    player.speedx -= 6
-                if event.key == pygame.K_UP:
-                    player.speedy += 6
-                if event.key == pygame.K_DOWN:
-                    player.speedy -= 6
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_LEFT and event.key == pygame.K_UP:
+                        player.speedx -= 3
+                        player.speedy += 3
+                    if event.key == pygame.K_RIGHT and event.key == pygame.K_UP:
+                        player.speedx += 3
+                        player.speedy += 3
+                    if event.key == pygame.K_LEFT and event.key == pygame.K_DOWN:
+                        player.speedx -= 3
+                        player.speedy += 3
+                    if event.key == pygame.K_RIGHT and event.key == pygame.K_DOWN:
+                        player.speedx += 3
+                        player.speedy += 3
+                    if event.key == pygame.K_LEFT:
+                        player.speedx -= 6
+                    if event.key == pygame.K_RIGHT:
+                        player.speedx += 6
+                    if event.key == pygame.K_UP:
+                        player.speedy -= 6
+                    if event.key == pygame.K_DOWN:
+                        player.speedy += 6
+                    if event.key == pygame.K_ESCAPE:
+                        state = DONE
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_LEFT:
+                        player.speedx += 6
+                    if event.key == pygame.K_RIGHT:
+                        player.speedx -= 6
+                    if event.key == pygame.K_UP:
+                        player.speedy += 6
+                    if event.key == pygame.K_DOWN:
+                        player.speedy -= 6
 
         collisions = pygame.sprite.spritecollide(player, all_arrow, True, pygame.sprite.collide_mask)  # Verifica colisão e remove os meteoros
 
         if len(collisions) > 0:  # Se houve colisão
             time_finished = time_playing
+            pygame.mixer.music.stop()
+            pygame.mixer.music.load(path.join(SND_DIR, 'Game_over_bgm.wav'))
+            pygame.mixer.music.play()
             if time_finished > best_score:
                 best_score = time_finished
+            i = HEIGHT
+            while i >= 0:
+                rect = pygame.Rect(0,i,WIDTH,8)
+                pygame.draw.rect(window,BLACK, rect)
+                pygame.display.update()
+                pygame.time.wait(15)
+                i -= 5
             state = DONE
-        t = pygame.time.get_ticks()
-        time_playing = (t - t_init)/1000
 
         bool_diff = False
         if time_playing >= t_aug:
             bool_diff = True
         if bool_diff:
+            bgd_random = random.randint(0,4)
             current += DIFF
             current_aug += DIFF
             t_aug += 10
@@ -104,12 +125,8 @@ def game_screen(window, best_score):
                 arrow = Arrow(assets, posicao, current_aug)
                 all_sprites.add(arrow)
                 all_arrow.add(arrow)
-        timer = assets[TIMER_FONT].render('{0:.2f}'.format(time_playing), True, (0,0,255)) # A função "get_ticks" dá o valor em milissegundos, divide por 1000 para ter em segundos.
 
         all_sprites.update()
-        window.fill((255,255,255))
-        window.blit(timer, (10,10))
-        window.blit(best_text, (10,40))
         all_sprites.draw(window)
         pygame.display.update()
     return [state,best_score]

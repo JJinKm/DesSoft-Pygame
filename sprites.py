@@ -109,3 +109,16 @@ class Arrow(pygame.sprite.Sprite):
                 self.speedy = random.randint(5+self.diff,7+self.diff)
                 self.initposx = self.rect.x
                 self.initposy = self.rect.y
+
+class Moving(pygame.sprite.Sprite):
+    def __init__(self, center, assets):
+        pygame.sprite.Sprite.__init__(self)
+        self.anim = assets
+
+        self.frame = 0
+        self.image = self.anim[self.frame]
+        self.rect = self.image.get_rect()
+        self.rect.center = center
+
+        self.last_update = pygame.time.get_ticks()
+        self.frame_ticks = 50
