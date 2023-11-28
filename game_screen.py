@@ -32,7 +32,7 @@ def game_screen(window, best_score):
     OVER = 2
     state = PLAYING
 
-    bgd_random = random.randint(0,4)
+    bgd_random = random.randint(0,3)
 
     t_init = pygame.time.get_ticks()
     
@@ -115,7 +115,7 @@ def game_screen(window, best_score):
         if time_playing >= t_aug:
             bool_diff = True
         if bool_diff:
-            bgd_random = random.randint(0,4)
+            bgd_random = random.randint(0,3)
             current += DIFF
             current_aug += DIFF
             t_aug += 10

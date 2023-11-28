@@ -37,7 +37,7 @@ while running:
         
         if state == 0:
             end_time = time.time()
-            survived_time = end_time - start_time - 0.08 if start_time is not None else 0
+            survived_time = end_time - start_time - 2.33 if start_time is not None else 0
 
             font = pygame.font.Font(None, 36)
             text = font.render(f'Game Over', True, (255, 255, 255))
@@ -48,9 +48,10 @@ while running:
             window.fill((0, 0, 0))
             window.blit(text, text_rect)
             window.blit(text2, text2_rect)
-            pygame.mixer.music.fadeout(4890)
+            pygame.mixer.music.fadeout(5000)
             pygame.display.flip()
-            pygame.time.wait(5000)  
+            pygame.time.wait(5000)
+            pygame.mixer.music.stop()
             state = INIT
 
             start_time = None  

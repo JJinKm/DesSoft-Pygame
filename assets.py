@@ -30,7 +30,7 @@ def load_assets():
     assets[CURSOR_IMG_MIRROR] = pygame.transform.scale(assets['cursor_img_mirror'], (40, 20))
     assets[CREDIT_FONT] = pygame.font.Font(os.path.join(FNT_DIR, 'PressStart2P.ttf'), 18)
     assets[BACKGROUND] = []
-    for i in range(5):
+    for i in range(4):
         img = pygame.image.load(os.path.join(IMG_DIR, 'bgd{0}.png'.format(i))).convert()
         img = pygame.transform.scale(img, (WIDTH, HEIGHT))
         assets[BACKGROUND].append(img)
