@@ -16,6 +16,6 @@ Após, ter no seu computador o pygame, inicializa-se o programa "Cat_survival.py
 Controles: Setas do teclado para mover o personagem; Espaço para interagir no menu <br>
 <br>
 Mecanismo: Quando o boneco (gato) encosta em um dos projéteis, você perde e mostra o tempo de sobrevivência, abaixo do timer está o seu melhor tempo (quando fecha o programa
-o seu tempo é perdido).
-A cada 10 segundos a dificuldade aumenta, com mais projéteis e mais rápidos, também, a imagem de fundo altera.
+o seu tempo é perdido). <br>
+A cada 10 segundos a dificuldade aumenta, com mais projéteis e mais rápidos, também, a imagem de fundo altera. <br>
 Quando uma música termina, começa uma nova.
