@@ -13,9 +13,23 @@ Para inicializar o programa, deve primeiro baixar a biblioteca Pygame, realizado
 <br> 
 Após, ter no seu computador o pygame, inicializa-se o programa "Cat_survival.py" para rodar o jogo. <br>
 <br>
-Controles: Setas do teclado para mover o personagem; Espaço para interagir no menu <br>
+# Controles: 
+Setas do teclado para mover o personagem; Espaço para interagir no menu <br>
 <br>
-Mecanismo: Quando o boneco (gato) encosta em um dos projéteis, você perde e mostra o tempo de sobrevivência, abaixo do timer está o seu melhor tempo (quando fecha o programa
+# Mecanismo: 
+Quando o boneco (gato) encosta em um dos projéteis, você perde e mostra o tempo de sobrevivência, abaixo do timer está o seu melhor tempo (quando fecha o programa
 o seu tempo é perdido). <br>
 A cada 10 segundos a dificuldade aumenta, com mais projéteis e mais rápidos, também, a imagem de fundo altera. <br>
 Quando uma música termina, começa uma nova.
+
+# Agradecimento especial
+Professor Fillipe Resina <br>
+Músicas feita pelo Davi Bruder <br>
+
+# Link dos assets utilizados
+https://craftpix.net/freebies/free-slash-sprite-cartoon-effects/?num=1&count=40&sq=slash&pos=7 <br>
+https://cupnooble.itch.io/sprout-lands-asset-pack <br>
+https://craftpix.net/freebies/free-sky-with-clouds-background-pixel-art-set/ <br>
+https://craftpix.net/freebies/free-winter-backgrounds-pixel-art/ <br>
+https://craftpix.net/freebies/ocean-and-clouds-free-pixel-art-backgrounds/ <br>
+https://craftpix.net/freebies/free-summer-pixel-art-backgrounds/
