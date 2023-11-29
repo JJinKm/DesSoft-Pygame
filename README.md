@@ -29,6 +29,8 @@ Músicas feito pelo Davi Bruder <br>
 # Link do video do jogo
 https://youtu.be/UGMJ7z5IpWg
 
+# Jogo de referência
+https://www.youtube.com/watch?v=JIjtTNj94O4
 # Link dos assets utilizados
 https://craftpix.net/freebies/free-slash-sprite-cartoon-effects/?num=1&count=40&sq=slash&pos=7 <br>
 https://cupnooble.itch.io/sprout-lands-asset-pack <br>
