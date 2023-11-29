@@ -14,7 +14,8 @@ Para inicializar o programa, deve primeiro baixar a biblioteca Pygame, realizado
 Após, ter no seu computador o pygame, inicializa-se o programa "Cat_survival.py" para rodar o jogo. <br>
 <br>
 # Controles: 
-Setas do teclado para mover o personagem; Espaço para interagir no menu <br>
+**Setas** do teclado para mover o personagem <br> 
+**Espaço** para interagir no menu <br>
 <br>
 # Mecanismo: 
 Quando o boneco (gato) encosta em um dos projéteis, você perde e mostra o tempo de sobrevivência, abaixo do timer está o seu melhor tempo (quando fecha o programa
