@@ -25,7 +25,7 @@ Quando uma música termina, começa uma nova.
 
 # Agradecimento especial
 Professor Fillipe Resina <br>
-Músicas feita pelo Davi Bruder <br>
+Músicas feito pelo Davi Bruder <br>
 
 # Link dos assets utilizados
 https://craftpix.net/freebies/free-slash-sprite-cartoon-effects/?num=1&count=40&sq=slash&pos=7 <br>
