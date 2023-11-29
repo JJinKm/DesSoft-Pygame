@@ -37,7 +37,7 @@ while running:
         
         if state == 0:
             end_time = time.time()
-            survived_time = end_time - start_time - 2.33 if start_time is not None else 0
+            survived_time = end_time - start_time - 2.52 if start_time is not None else 0
 
             font = pygame.font.Font(None, 36)
             text = font.render(f'Game Over', True, (255, 255, 255))

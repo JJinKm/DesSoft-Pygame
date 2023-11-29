@@ -5,8 +5,8 @@ IMG_DIR = path.join(path.dirname(__file__), 'assets', 'img')
 SND_DIR = path.join(path.dirname(__file__), 'assets', 'snd')
 FNT_DIR = path.join(path.dirname(__file__), 'assets', 'font')
 
-WIDTH = 545
-HEIGHT = 465
+WIDTH = 675
+HEIGHT = 525
 FPS = 30
 
 HORIZONTAL = 15

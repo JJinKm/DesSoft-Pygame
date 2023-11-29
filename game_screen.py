@@ -20,10 +20,9 @@ def game_screen(window, best_score):
     all_sprites.add(player)
     DIFF = 1
     N_ARROW = 5
-    AUG = 1
     for i in range(N_ARROW):
         posicao = random.choice([HORIZONTAL, VERTICAL])
-        arrow = Arrow(assets, posicao, AUG)
+        arrow = Arrow(assets, posicao, 0)
         all_sprites.add(arrow)
         all_arrow.add(arrow)
     
@@ -37,15 +36,18 @@ def game_screen(window, best_score):
     t_init = pygame.time.get_ticks()
     
     current = N_ARROW
-    current_aug = AUG
     t_aug = 10
 
     best_text = assets[TIMER_FONT].render('{0:.2f}'.format(best_score), True, (0, 0, 255))
 
     music_random = random.randint(0,4)
+
     pygame.mixer.music.load(path.join(SND_DIR, 'bgm{0}.wav'.format(music_random)))
     pygame.mixer.music.set_volume(0.10)
     pygame.mixer.music.play()
+
+    past_time = pygame.time.get_ticks()
+    past_time = (past_time - t_init)/1000
 
     while state != DONE:
         clock.tick(FPS)
@@ -95,6 +97,12 @@ def game_screen(window, best_score):
 
         collisions = pygame.sprite.spritecollide(player, all_arrow, True, pygame.sprite.collide_mask)  # Verifica colisão e remove os meteoros
 
+        if pygame.mixer.music.get_busy() == False:
+            music_random = random.randint(0,4)
+            pygame.mixer.music.load(path.join(SND_DIR, 'bgm{0}.wav'.format(music_random)))
+            pygame.mixer.music.set_volume(0.10)
+            pygame.mixer.music.play()
+
         if len(collisions) > 0:  # Se houve colisão
             time_finished = time_playing
             pygame.mixer.music.stop()
@@ -117,12 +125,11 @@ def game_screen(window, best_score):
         if bool_diff:
             bgd_random = random.randint(0,3)
             current += DIFF
-            current_aug += DIFF
             t_aug += 10
             bool_diff = False
-            for i in range(current):
+            for i in range(DIFF):
                 posicao = random.choice([HORIZONTAL, VERTICAL])
-                arrow = Arrow(assets, posicao, current_aug)
+                arrow = Arrow(assets, posicao, current)
                 all_sprites.add(arrow)
                 all_arrow.add(arrow)
 
