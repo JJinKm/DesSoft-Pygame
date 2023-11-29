@@ -28,7 +28,6 @@ def init_screen(screen):
 
     if pygame.mixer.music.get_busy() == False:
         pygame.mixer.music.load(path.join(SND_DIR, 'music_pygame.wav'))
-        pygame.mixer.music.set_volume(0.4)
 
         pygame.mixer.music.play(loops=-1)
 

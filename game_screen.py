@@ -100,7 +100,6 @@ def game_screen(window, best_score):
         if pygame.mixer.music.get_busy() == False:
             music_random = random.randint(0,4)
             pygame.mixer.music.load(path.join(SND_DIR, 'bgm{0}.wav'.format(music_random)))
-            pygame.mixer.music.set_volume(0.10)
             pygame.mixer.music.play()
 
         if len(collisions) > 0:  # Se houve colisão
